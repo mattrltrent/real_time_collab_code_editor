@@ -50,8 +50,7 @@ class _SidebarState extends State<Sidebar> {
           child: Text(
             "uvec demo",
             textAlign: TextAlign.center,
-            style: miniFont.copyWith(
-                color: Theme.of(context).colorScheme.secondary),
+            style: miniFont.copyWith(color: Theme.of(context).colorScheme.secondary),
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -82,13 +81,11 @@ class _SidebarState extends State<Sidebar> {
                               child: TextField(
                                 controller: _textController,
                                 decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 0),
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                                   border: InputBorder.none,
                                   hintText: 'newFile.js',
                                   hintStyle: miniFont.copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.onSurface,
+                                    color: Theme.of(context).colorScheme.onSurface,
                                   ),
                                 ),
                                 style: miniFont.copyWith(
@@ -127,7 +124,11 @@ class _SidebarState extends State<Sidebar> {
                   child: Consumer<FirebaseState>(
                     builder: (context, firebaseState, child) {
                       if (firebaseState.documents.isEmpty) {
-                        return Center(child: Text('No documents found.'));
+                        return Center(
+                            child: Text(
+                          'No files found',
+                          style: miniFont.copyWith(color: Theme.of(context).colorScheme.primary),
+                        ));
                       }
                       return ListView.builder(
                         itemCount: firebaseState.documents.length,
@@ -152,8 +153,17 @@ class _SidebarState extends State<Sidebar> {
                                 document.id,
                               );
                             },
-                            onDeletePressed: () {},
-                            onEditPressed: (newName) {},
+                            onDeletePressed: () {
+                              Provider.of<FirebaseState>(context, listen: false).deleteDocument(
+                                document.id,
+                              );
+                            },
+                            onEditPressed: (newName) {
+                              Provider.of<FirebaseState>(context, listen: false).updateFilename(
+                                document.id,
+                                newName,
+                              );
+                            },
                             fileName: document.title,
                           );
                         },

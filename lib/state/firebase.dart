@@ -23,14 +23,19 @@ class FirebaseState extends ChangeNotifier {
       final data = event.snapshot.value as Map<dynamic, dynamic>?;
       print('Data fetched from Firebase: $data'); // Debugging statement
       if (data != null) {
-        _documents = data.entries.map((entry) {
-          var documentData = entry.value as Map<dynamic, dynamic>;
-          return Document(
-            id: entry.key,
-            title: documentData['title'] ?? documentData['filename'] ?? 'Untitled', // Handle both cases
-            content: documentData['content'] ?? '',
-          );
-        }).toList();
+        _documents = data.entries
+            .map((entry) {
+              var documentData = entry.value as Map<dynamic, dynamic>;
+              if (documentData['title'] != null || documentData['filename'] != null) {
+                return Document(
+                  id: entry.key,
+                  title: documentData['title'] ?? documentData['filename'],
+                  content: documentData['content'] ?? '',
+                );
+              }
+            })
+            .whereType<Document>()
+            .toList(); // Filter out null values
         print('Parsed documents: $_documents'); // Debugging statement
         notifyListeners();
       } else {
@@ -44,11 +49,13 @@ class FirebaseState extends ChangeNotifier {
     DatabaseEvent event = await documentRef.once();
     if (event.snapshot.value != null) {
       var documentData = event.snapshot.value as Map<dynamic, dynamic>;
-      return Document(
-        id: id,
-        title: documentData['title'] ?? documentData['filename'] ?? 'Untitled', // Handle both cases
-        content: documentData['content'] ?? '',
-      );
+      if (documentData['title'] != null || documentData['filename'] != null) {
+        return Document(
+          id: id,
+          title: documentData['title'] ?? documentData['filename'],
+          content: documentData['content'] ?? '',
+        );
+      }
     }
     return null;
   }
@@ -73,7 +80,7 @@ class FirebaseState extends ChangeNotifier {
   void updateDocument(String id, Map<dynamic, dynamic> data) {
     var updatedDocument = Document(
       id: id,
-      title: data['title'] ?? data['filename'] ?? 'Untitled', // Handle both cases
+      title: data['title'] ?? data['filename'],
       content: data['content'] ?? '',
     );
 

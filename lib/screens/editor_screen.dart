@@ -48,6 +48,11 @@ class _EditorScreenState extends State<EditorScreen> {
         appState.toggleSidebar();
         return KeyEventResult.handled;
       }
+      // if cmd + w, close the current tab
+      else if (isMetaPressed && event.logicalKey == LogicalKeyboardKey.keyW) {
+        appState.closeFocusedFile();
+        return KeyEventResult.handled;
+      }
     }
     return KeyEventResult.ignored;
   }

@@ -25,6 +25,7 @@ class TerminalTabText extends StatelessWidget {
               )
             : bodyFont.copyWith(
                 color: Theme.of(context).colorScheme.onSurface,
+                fontWeight: FontWeight.bold,
               ),
       ),
     );

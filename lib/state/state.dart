@@ -20,6 +20,14 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateOpenFile(Document updatedFile) {
+    int index = _openFiles.indexWhere((doc) => doc.id == updatedFile.id);
+    if (index != -1) {
+      _openFiles[index] = updatedFile;
+      notifyListeners();
+    }
+  }
+
   void toggleSidebar() {
     _sidebarShown = !_sidebarShown;
     notifyListeners();
@@ -39,14 +47,26 @@ class AppState extends ChangeNotifier {
     return _openFiles.indexWhere((doc) => doc.id == file.id);
   }
 
+  void closeFocusedFile() {
+    if (_selectedFileId != null) {
+      Document? file = _openFiles.firstWhereOrNull((doc) => doc.id == _selectedFileId);
+      if (file != null) {
+        removeOpenFile(file);
+      }
+    }
+  }
+
   void removeOpenFile(Document file) {
     _openFiles.removeWhere((doc) => doc.id == file.id);
     if (_selectedFileId == file.id) {
       _selectedFileId = null;
     }
+
     // if there is still a file open, set the one closest on the left to the removed one
     if (_openFiles.isNotEmpty) {
       _selectedFileId = _openFiles.last.id;
+    } else {
+      _selectedFileId = null;
     }
     notifyListeners();
   }

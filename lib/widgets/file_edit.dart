@@ -20,11 +20,18 @@ class FileEdit extends StatefulWidget {
 
 class _FileEditState extends State<FileEdit> {
   late CodeController _controller;
+  String _lastSyncedContent = '';
+  bool _isUpdating = false;
 
   @override
   void initState() {
     super.initState();
     _initializeController();
+
+    final firebaseState = Provider.of<FirebaseState>(context, listen: false);
+    firebaseState.detectChange(widget.doc.id);
+
+    firebaseState.addListener(_onDocumentUpdated);
   }
 
   void _initializeController() {
@@ -36,12 +43,44 @@ class _FileEditState extends State<FileEdit> {
       language: language,
     );
 
-    _controller.addListener(() {
-      setState(() {});
-    });
+    _lastSyncedContent = widget.doc.content;
+
+    _controller.addListener(_onLocalChange);
 
     // Disable auto completion
     _controller.popupController.enabled = false;
+  }
+
+  void _onLocalChange() {
+    if (!_isUpdating) {
+      setState(() {});
+    }
+  }
+
+  void _onDocumentUpdated() {
+    final firebaseState = Provider.of<FirebaseState>(context, listen: false);
+    final updatedDoc = firebaseState.documents.firstWhere((doc) => doc.id == widget.doc.id, orElse: () => widget.doc);
+
+    if (updatedDoc.content != _lastSyncedContent) {
+      _mergeRemoteChanges(updatedDoc.content);
+      _lastSyncedContent = updatedDoc.content;
+    }
+  }
+
+  void _mergeRemoteChanges(String remoteContent) {
+    _isUpdating = true;
+
+    // Here, a simple replacement is used. A more sophisticated OT or CRDT approach can be applied.
+    _controller.text = remoteContent;
+
+    _isUpdating = false;
+  }
+
+  void _onKeyEvent() {
+    final firebaseState = Provider.of<FirebaseState>(context, listen: false);
+    firebaseState.updateContent(widget.doc.id, _controller.text);
+    _lastSyncedContent = _controller.text;
+    print(_controller.text);
   }
 
   Mode _getLanguageByExtension(String extension) {
@@ -56,12 +95,100 @@ class _FileEditState extends State<FileEdit> {
       'html': 'html',
       'css': 'css',
       'cpp': 'cpp',
+      'c': 'c',
+      'h': 'cpp',
+      'hpp': 'cpp',
       'java': 'java',
       'py': 'python',
       'rb': 'ruby',
       'php': 'php',
       'sh': 'bash',
+      'bash': 'bash',
+      'zsh': 'bash',
       'md': 'markdown',
+      'go': 'go',
+      'swift': 'swift',
+      'kotlin': 'kotlin',
+      'kt': 'kotlin',
+      'rs': 'rust',
+      'r': 'r',
+      'pl': 'perl',
+      'pm': 'perl',
+      'scala': 'scala',
+      'sc': 'scala',
+      'groovy': 'groovy',
+      'lua': 'lua',
+      'xml': 'xml',
+      'xsl': 'xml',
+      'xslt': 'xml',
+      'm': 'objectivec',
+      'mm': 'objectivec',
+      'vb': 'vbnet',
+      'cs': 'csharp',
+      'fs': 'fsharp',
+      'erl': 'erlang',
+      'ex': 'elixir',
+      'exs': 'elixir',
+      'hs': 'haskell',
+      'jl': 'julia',
+      'nim': 'nim',
+      'd': 'd',
+      'tsv': 'tsv',
+      'csv': 'csv',
+      'ini': 'ini',
+      'conf': 'ini',
+      'toml': 'toml',
+      'dockerfile': 'dockerfile',
+      'tf': 'hcl',
+      'rake': 'ruby',
+      'haml': 'ruby',
+      'sass': 'sass',
+      'scss': 'scss',
+      'less': 'less',
+      'styl': 'stylus',
+      'coffee': 'coffeescript',
+      'hx': 'haxe',
+      'tex': 'latex',
+      'cls': 'latex',
+      'sty': 'latex',
+      'lisp': 'lisp',
+      'cl': 'lisp',
+      'lsp': 'lisp',
+      'scm': 'scheme',
+      'rkt': 'scheme',
+      'vhdl': 'vhdl',
+      'verilog': 'verilog',
+      'sv': 'systemverilog',
+      'v': 'verilog',
+      'bsv': 'bluespec',
+      'bib': 'bibtex',
+      'rmd': 'markdown',
+      'pug': 'pug',
+      'jade': 'pug',
+      'ejs': 'ejs',
+      'erb': 'erb',
+      'hbs': 'handlebars',
+      'jsp': 'jsp',
+      'asp': 'asp',
+      'aspx': 'aspx',
+      'j2': 'jinja',
+      'jinja': 'jinja',
+      'twig': 'twig',
+      'liquid': 'liquid',
+      'mustache': 'mustache',
+      'nunjucks': 'nunjucks',
+      'njk': 'nunjucks',
+      'soy': 'closuretemplates',
+      'dot': 'graphviz',
+      'gv': 'graphviz',
+      'proto': 'protobuf',
+      'thrift': 'thrift',
+      'avdl': 'avro',
+      'sol': 'solidity',
+      'purs': 'purescript',
+      'ml': 'ocaml',
+      'mli': 'ocaml',
+      'pp': 'puppet',
     };
 
     final languageKey = extensionToLanguage[extension] ?? 'plaintext';
@@ -70,6 +197,9 @@ class _FileEditState extends State<FileEdit> {
 
   @override
   void dispose() {
+    final firebaseState = Provider.of<FirebaseState>(context, listen: false);
+    firebaseState.removeListener(_onDocumentUpdated);
+
     _controller.dispose();
     super.dispose();
   }
@@ -90,9 +220,7 @@ class _FileEditState extends State<FileEdit> {
           child: KeyboardListener(
             focusNode: FocusNode(),
             onKeyEvent: (event) {
-              final firebaseState = Provider.of<FirebaseState>(context, listen: false);
-              firebaseState.updateContent(widget.doc.id, _controller.text);
-              print(_controller.text);
+              _onKeyEvent();
             },
             child: CodeField(
               lineNumbers: true,

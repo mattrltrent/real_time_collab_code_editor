@@ -62,22 +62,21 @@ class _FileTabState extends State<FileTab> {
               // File extension icon
               FileIcon(
                 '.$fileExtension',
-                size: 24.0,
+                size: 24,
               ),
-              // File name
               Text(
                 widget.document.title,
                 style: miniFont.copyWith(color: Theme.of(context).colorScheme.primary),
               ),
-              const SizedBox(width: 8.0),
+              const SizedBox(width: 10),
               // Close button
               TouchableOpacity(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 2),
+                  padding: EdgeInsets.only(top: 4, left: 1, right: 1, bottom: 1),
                   child: Icon(
                     CupertinoIcons.xmark,
                     size: 12.0,
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
                 onTap: widget.onClose,
