@@ -6,8 +6,13 @@ import 'package:uvec/router.dart';
 import 'config/themes.dart';
 import 'init.dart';
 import 'state/state.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   init().then((_) {
