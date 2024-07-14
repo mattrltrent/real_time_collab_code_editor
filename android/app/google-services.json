@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "419684208484",
+    "project_id": "vscode-clone",
+    "storage_bucket": "vscode-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419684208484:android:60fcff363ce148d4537471",
+        "android_client_info": {
+          "package_name": "com.uvec.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3blg4_xCrXMQ9KnfZMKSz0hLeTWvDon4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419684208484:android:9a76c6a63a3a516b537471",
+        "android_client_info": {
+          "package_name": "com.uvec.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3blg4_xCrXMQ9KnfZMKSz0hLeTWvDon4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
