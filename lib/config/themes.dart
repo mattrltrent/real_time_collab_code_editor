@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
 
+// tertiary: Color(0xff9EDDFF),
+
 class AppTheme {
   static ThemeData dark = ThemeData(
     brightness: Brightness.dark,
     highlightColor: Colors.transparent,
     splashColor: Colors.transparent,
     colorScheme: const ColorScheme(
-      onSurfaceVariant: Color(0xff1E1E1E), // VS Code dark theme background
-      surfaceVariant: Color(0xff252526), // VS Code sidebar background
+      onSurfaceVariant: Color.fromARGB(220, 239, 239, 239),
+      surfaceVariant: Color.fromARGB(255, 23, 23, 23),
       brightness: Brightness.dark,
-      primary: Color(0xff007ACC), // VS Code blue
-      onPrimary: Color(0xffD4D4D4), // Light gray for text
-      secondary: Color(0xff0E70C0), // VS Code secondary blue
-      onSecondary: Color(0xffFFFFFF), // White for content on secondary color
-      tertiary: Color(0xff4EC9B0), // VS Code teal
-      surfaceTint: Color(0xff007ACC), // VS Code blue
-      error: Color(0xffF48771), // VS Code error red
-      onError: Color(0xff1E1E1E), // Dark background for error
-      background: Color(0xff1E1E1E), // VS Code dark theme background
-      onBackground: Color(0xffD4D4D4), // Light gray for text
-      surface: Color(0xff252526), // VS Code sidebar background
-      onSurface: Color(0xffD4D4D4), // Light gray for text
-      shadow: Color(0xff000000), // Black for shadows
-      primaryContainer: Color(0xff3C3C3C), // VS Code panel background
-      secondaryContainer: Color(0xff252526), // VS Code sidebar background
-      onErrorContainer: Color(0xffF48771), // Same as error color
-      onSecondaryContainer: Color(0xff007ACC), // VS Code blue
-      onTertiaryContainer: Color(0xffD4D4D4), // Light gray for text
+      primary: Color.fromARGB(255, 229, 233, 243),
+      onPrimary: Color(0xff333333),
+      secondary: Color.fromARGB(255, 255, 172, 241),
+      onSecondary: Color(0xff333333),
+      tertiary: Color.fromARGB(255, 255, 172, 241),
+      surfaceTint: Color(0xff90A17D),
+      error: Color(0xffFF6F6F),
+      onError: Color.fromARGB(255, 247, 230, 230),
+      background: Color.fromARGB(255, 30, 34, 43),
+      onBackground: Color.fromARGB(255, 58, 63, 79),
+      surface: Color.fromARGB(255, 38, 44, 58),
+      onSurface: Color.fromARGB(255, 56, 71, 87),
+      shadow: Color.fromARGB(255, 26, 27, 36),
+      primaryContainer: Color(0xff333333),
+      secondaryContainer: Color(0xfffde5b6),
+      onErrorContainer: Color(0xff59CE8F),
+      onSecondaryContainer: Color(0xffEB4747),
+      onTertiaryContainer: Color.fromARGB(255, 38, 44, 58),
     ),
   );
 
@@ -35,27 +37,27 @@ class AppTheme {
     highlightColor: Colors.transparent,
     splashColor: Colors.transparent,
     colorScheme: const ColorScheme(
-      onSurfaceVariant: Color(0xffF3F3F3), // VS Code light theme background
-      surfaceVariant: Color(0xffE7E7E7), // VS Code light sidebar background
+      onSurfaceVariant: Color.fromARGB(255, 45, 45, 45),
+      surfaceVariant: Color.fromARGB(255, 250, 250, 250),
       brightness: Brightness.light,
-      primary: Color(0xff007ACC), // VS Code blue
-      onPrimary: Color(0xff1E1E1E), // Dark text for contrast
-      secondary: Color(0xff0E70C0), // VS Code secondary blue
-      onSecondary: Color(0xff1E1E1E), // Dark text for contrast
-      tertiary: Color(0xff4EC9B0), // VS Code teal
-      surfaceTint: Color(0xff007ACC), // VS Code blue
-      error: Color(0xffF48771), // VS Code error red
-      onError: Color(0xff1E1E1E), // Dark background for error
-      background: Color(0xffFFFFFF), // White background
-      onBackground: Color(0xff1E1E1E), // Dark text for contrast
-      surface: Color(0xffE7E7E7), // VS Code light sidebar background
-      onSurface: Color(0xff1E1E1E), // Dark text for contrast
-      shadow: Color(0xff000000), // Black for shadows
-      primaryContainer: Color(0xffF3F3F3), // VS Code light theme background
-      secondaryContainer: Color(0xffE7E7E7), // VS Code light sidebar background
-      onErrorContainer: Color(0xffF48771), // Same as error color
-      onSecondaryContainer: Color(0xff007ACC), // VS Code blue
-      onTertiaryContainer: Color(0xff1E1E1E), // Dark text for contrast
+      primary: Color.fromARGB(255, 0, 0, 0),
+      onPrimary: Color(0xffFAFAFA),
+      tertiary: Color.fromARGB(255, 247, 95, 95),
+      onSecondary: Color.fromARGB(255, 255, 255, 255),
+      secondary: Color.fromARGB(255, 247, 95, 95),
+      surfaceTint: Color(0xffA1B19C),
+      error: Color.fromARGB(255, 231, 104, 104),
+      onError: Colors.white,
+      background: Color.fromARGB(255, 255, 255, 255),
+      onBackground: Color.fromARGB(255, 212, 212, 212),
+      surface: Color.fromARGB(255, 241, 241, 241),
+      onSurface: Color.fromARGB(255, 0, 0, 0),
+      shadow: Color.fromARGB(255, 236, 236, 236),
+      primaryContainer: Color(0xff555555),
+      secondaryContainer: Color(0xfffde5b6),
+      onErrorContainer: Color(0xff59CE8F),
+      onSecondaryContainer: Color(0xffEB4747),
+      onTertiaryContainer: Color.fromARGB(255, 227, 224, 224),
     ),
   );
 }

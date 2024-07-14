@@ -49,33 +49,36 @@ class _TouchableOpacityState extends State<TouchableOpacity> with SingleTickerPr
   @override
   Widget build(BuildContext context) {
     return widget.tappable
-        ? GestureDetector(
-            behavior: widget.behavior,
-            onTapDown: (_) {
-              animController.forward();
-              animController.addListener(() => setState(() {}));
-            },
-            onLongPress: widget.onLongPress != null
-                ? () {
-                    if (widget.onLongPress != null) {
-                      widget.onLongPress!();
-                      HapticFeedback.lightImpact();
+        ? MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              behavior: widget.behavior,
+              onTapDown: (_) {
+                animController.forward();
+                animController.addListener(() => setState(() {}));
+              },
+              onLongPress: widget.onLongPress != null
+                  ? () {
+                      if (widget.onLongPress != null) {
+                        widget.onLongPress!();
+                        HapticFeedback.lightImpact();
+                      }
                     }
-                  }
-                : null,
-            onDoubleTap: widget.onDoubleTap,
-            onTapCancel: () {
-              animController.reverse();
-              animController.addListener(() => setState(() {}));
-            },
-            onTap: () {
-              HapticFeedback.lightImpact();
-              widget.onTap();
-              startAnim();
-            },
-            child: Opacity(
-              opacity: -anim.value * 0.6 + 1,
-              child: widget.child,
+                  : null,
+              onDoubleTap: widget.onDoubleTap,
+              onTapCancel: () {
+                animController.reverse();
+                animController.addListener(() => setState(() {}));
+              },
+              onTap: () {
+                HapticFeedback.lightImpact();
+                widget.onTap();
+                startAnim();
+              },
+              child: Opacity(
+                opacity: -anim.value * 0.6 + 1,
+                child: widget.child,
+              ),
             ),
           )
         : widget.child;

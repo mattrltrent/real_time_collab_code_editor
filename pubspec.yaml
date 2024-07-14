@@ -41,6 +41,7 @@ dependencies:
   google_fonts: ^6.2.1
   flutter_resizable_container: ^2.0.0
   firebase_core: ^3.2.0
+  file_icon: ^1.0.0
 
 dev_dependencies:
   flutter_test:
