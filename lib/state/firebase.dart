@@ -72,11 +72,22 @@ class FirebaseState extends ChangeNotifier {
       content: data['content'],
     );
 
+    // update the document in Firebase
+    FirebaseDatabase.instance.ref('documents').child(id).update({
+      'title': updatedDocument.title,
+      'content': updatedDocument.content,
+    });
+
+    // update the document in the local list
     int index = _documents.indexWhere((doc) => doc.id == id);
     if (index != -1) {
       _documents[index] = updatedDocument;
       notifyListeners();
     }
+  }
+
+  void deleteDocument(String id) {
+    FirebaseDatabase.instance.ref('documents').child(id).remove();
   }
 
   void saveDocument(String id, String title, String content) {
