@@ -22,6 +22,7 @@ class _FileEditState extends State<FileEdit> {
   late CodeController _controller;
   String _lastSyncedContent = '';
   bool _isUpdating = false;
+  TextSelection? _lastSelection;
 
   @override
   void initState() {
@@ -54,6 +55,7 @@ class _FileEditState extends State<FileEdit> {
   void _onLocalChange() {
     if (!_isUpdating) {
       setState(() {});
+      _syncWithFirebase();
     }
   }
 
@@ -70,17 +72,24 @@ class _FileEditState extends State<FileEdit> {
   void _mergeRemoteChanges(String remoteContent) {
     _isUpdating = true;
 
-    // Here, a simple replacement is used. A more sophisticated OT or CRDT approach can be applied.
+    // Get current cursor position
+    final cursorPosition = _controller.selection.baseOffset;
+
+    // Merge remote changes with the current content
     _controller.text = remoteContent;
+
+    // Restore cursor position if possible
+    if (cursorPosition >= 0 && cursorPosition <= _controller.text.length) {
+      _controller.selection = TextSelection.collapsed(offset: cursorPosition);
+    }
 
     _isUpdating = false;
   }
 
-  void _onKeyEvent() {
+  void _syncWithFirebase() {
     final firebaseState = Provider.of<FirebaseState>(context, listen: false);
     firebaseState.updateContent(widget.doc.id, _controller.text);
     _lastSyncedContent = _controller.text;
-    print(_controller.text);
   }
 
   Mode _getLanguageByExtension(String extension) {
@@ -220,7 +229,7 @@ class _FileEditState extends State<FileEdit> {
           child: KeyboardListener(
             focusNode: FocusNode(),
             onKeyEvent: (event) {
-              _onKeyEvent();
+              _onLocalChange();
             },
             child: CodeField(
               lineNumbers: true,
