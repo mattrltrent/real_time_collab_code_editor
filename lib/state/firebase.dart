@@ -60,40 +60,39 @@ class FirebaseState extends ChangeNotifier {
     curDocument.onValue.listen((DatabaseEvent event) {
       final data = event.snapshot.value as Map<dynamic, dynamic>?;
       if (data != null) {
-        updateDocument(id, data);
+          updateFilename(id, data['filename']);
+          updateContent(id, data['content']);
       }
     });
   }
 
-  void updateDocument(String id, Map<dynamic, dynamic> data) {
-    var updatedDocument = Document(
-      id: id,
-      title: data['title'],
-      content: data['content'],
-    );
-
-    // update the document in Firebase
+  void updateFilename(String id, String filename) {
     FirebaseDatabase.instance.ref('documents').child(id).update({
-      'title': updatedDocument.title,
-      'content': updatedDocument.content,
+      'filename': filename,
     });
 
-    // update the document in the local list
     int index = _documents.indexWhere((doc) => doc.id == id);
     if (index != -1) {
-      _documents[index] = updatedDocument;
+      _documents[index].title = filename;
       notifyListeners();
     }
+    print('Filename updated to $filename'); // Debugging statement
+  }
+
+  void updateContent(String id, String content) {
+    FirebaseDatabase.instance.ref('documents').child(id).update({
+      'content': content,
+    });
+
+    int index = _documents.indexWhere((doc) => doc.id == id);
+    if (index != -1) {
+      _documents[index].content = content;
+      notifyListeners();
+    }
+    print('Content updated to $content'); // Debugging statement
   }
 
   void deleteDocument(String id) {
     FirebaseDatabase.instance.ref('documents').child(id).remove();
-  }
-
-  void saveDocument(String id, String title, String content) {
-    updateDocument(id, {
-      'title': title,
-      'content': content,
-    });
   }
 }
