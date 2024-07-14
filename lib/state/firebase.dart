@@ -6,8 +6,28 @@ import '../models/models.dart';
 
 class FirebaseState extends ChangeNotifier {
   DatabaseReference ref = FirebaseDatabase.instance.ref();
-  final Document curDocument =
-      Document(id: '0', title: 'title', content: 'content');
+  var _documents = <Document>[];
+
+  List<Document> get documents => _documents;
+
+  AppState() {
+    fetchDocuments();
+  }
+
+  void fetchDocuments() {
+    ref.child('documents').onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value as Map<dynamic, dynamic>;
+      _documents = data.entries.map((entry) {
+        var documentData = entry.value as Map<dynamic, dynamic>;
+        return Document(
+          id: entry.key,
+          title: documentData['title'],
+          content: documentData['content'],
+        );
+      }).toList();
+      notifyListeners();
+    });
+  }
 
   void createUser(String name, List<String> documents) {
     ref.child('users').push().set({
@@ -30,20 +50,4 @@ class FirebaseState extends ChangeNotifier {
     });
   }
 
-  void detectChange(String id) {
-    DatabaseReference curDocument =
-        FirebaseDatabase.instance.ref('documents').child(id);
-    curDocument.onValue.listen((DatabaseEvent event) {
-      final data = event.snapshot.value;
-      updateCurDocument(data);
-    });
-  }
-
-  void updateCurDocument(var data) {
-    //TODO: parse response data
-    curDocument.id = data['id'];
-    curDocument.title = data['title'];
-    curDocument.content = data['content'];
-    notifyListeners();
-  }
 }
