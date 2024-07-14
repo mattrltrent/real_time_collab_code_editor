@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import '../models/models.dart';
 
 class AppState extends ChangeNotifier {
   DatabaseReference ref = FirebaseDatabase.instance.ref();
+  final Document curDocument =
+      Document(id: '0', title: 'title', content: 'content');
 
   void createUser(String name, List<String> documents) {
     ref.child('users').push().set({
@@ -23,5 +28,22 @@ class AppState extends ChangeNotifier {
       'title': title,
       'content': content,
     });
+  }
+
+  void detectChange(String id) {
+    DatabaseReference curDocument =
+        FirebaseDatabase.instance.ref('documents').child(id);
+    curDocument.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
+      updateCurDocument(data);
+    });
+  }
+
+  void updateCurDocument(var data) {
+    //TODO: parse response data
+    curDocument.id = data['id'];
+    curDocument.title = data['title'];
+    curDocument.content = data['content'];
+    notifyListeners();
   }
 }
