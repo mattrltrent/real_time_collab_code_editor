@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AppState extends ChangeNotifier {
-  int _currentView = 0;
   bool _terminalShown = true;
   bool _sidebarShown = true;
+  int _terminalTabSelected = 0;
 
-  int get currentView => _currentView;
   bool get terminalShown => _terminalShown;
   bool get sidebarShown => _sidebarShown;
-
-  void updateCurrentView(int newScreen) {
-    _currentView = newScreen;
-    notifyListeners();
-  }
+  int get terminalTabSelected => _terminalTabSelected;
 
   void toggleTerminal() {
     _terminalShown = !_terminalShown;
@@ -21,6 +16,11 @@ class AppState extends ChangeNotifier {
 
   void toggleSidebar() {
     _sidebarShown = !_sidebarShown;
+    notifyListeners();
+  }
+
+  void setTerminalTabSelected(int idx) {
+    _terminalTabSelected = idx;
     notifyListeners();
   }
 }

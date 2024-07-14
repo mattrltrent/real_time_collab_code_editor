@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uvec/widgets/file_edit.dart';
 import 'package:uvec/widgets/file_tab.dart';
 
 class FilePanels extends StatefulWidget {
@@ -13,11 +14,11 @@ class _FilePanelsState extends State<FilePanels> {
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).colorScheme.background,
-      child: Column(
+      child: const Column(
         children: [
           Align(
             alignment: Alignment.centerLeft,
-            child: const SingleChildScrollView(
+            child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
               child: Row(
@@ -43,12 +44,8 @@ class _FilePanelsState extends State<FilePanels> {
           Expanded(
             child: IndexedStack(
               children: [
-                Container(
-                  color: Colors.red,
-                ),
-                Container(
-                  color: Colors.blue,
-                ),
+                FileEdit(filename: "server.js"),
+                FileEdit(filename: "main.js"),
               ],
             ),
           ),
