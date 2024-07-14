@@ -152,7 +152,11 @@ class _SidebarState extends State<Sidebar> {
                                 document.id,
                               );
                             },
-                            onDeletePressed: () {},
+                            onDeletePressed: () {
+                              Provider.of<FirebaseState>(context, listen: false).deleteDocument(
+                                document.id,
+                              );
+                            },
                             onEditPressed: (newName) {},
                             fileName: document.title,
                           );
