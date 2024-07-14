@@ -46,6 +46,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '419684208484',
     projectId: 'vscode-clone',
     authDomain: 'vscode-clone.firebaseapp.com',
+    databaseURL: 'https://vscode-clone-default-rtdb.firebaseio.com',
     storageBucket: 'vscode-clone.appspot.com',
   );
 
@@ -62,6 +63,7 @@ class DefaultFirebaseOptions {
     appId: '1:419684208484:ios:d83e6be7405fd947537471',
     messagingSenderId: '419684208484',
     projectId: 'vscode-clone',
+    databaseURL: 'https://vscode-clone-default-rtdb.firebaseio.com',
     storageBucket: 'vscode-clone.appspot.com',
     iosBundleId: 'com.example.uvec',
   );
@@ -71,6 +73,7 @@ class DefaultFirebaseOptions {
     appId: '1:419684208484:ios:d83e6be7405fd947537471',
     messagingSenderId: '419684208484',
     projectId: 'vscode-clone',
+    databaseURL: 'https://vscode-clone-default-rtdb.firebaseio.com',
     storageBucket: 'vscode-clone.appspot.com',
     iosBundleId: 'com.example.uvec',
   );
