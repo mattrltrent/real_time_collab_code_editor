@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uvec/config/typography.dart';
 import 'package:uvec/widgets/file_edit.dart';
 import 'package:uvec/widgets/file_tab.dart';
 
@@ -15,6 +16,7 @@ class _FilePanelsState extends State<FilePanels> {
     return Container(
       color: Theme.of(context).colorScheme.background,
       child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Align(
             alignment: Alignment.centerLeft,

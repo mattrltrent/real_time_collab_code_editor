@@ -59,7 +59,6 @@ class _EditorScreenState extends State<EditorScreen> {
     return Scaffold(
       body: Focus(
         autofocus: true,
-        focusNode: _focusNode,
         onKeyEvent: listenForKeyboardShortcuts,
         child: Column(
           children: [

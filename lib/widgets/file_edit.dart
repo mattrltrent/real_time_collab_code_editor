@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:flutter_highlight/themes/atom-one-dark.dart';
+import 'package:flutter_highlight/themes/atom-one-light.dart';
 import 'package:highlight/highlight.dart';
 import 'package:highlight/languages/all.dart' as all;
 import 'package:uvec/config/typography.dart';
@@ -73,10 +74,15 @@ class _FileEditState extends State<FileEdit> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xff282c34),
+      color: MediaQuery.of(context).platformBrightness == Brightness.dark
+          ? const Color(0xff282c34)
+          : const Color(0xfffafafa),
       height: double.infinity,
       child: CodeTheme(
-        data: CodeThemeData(styles: atomOneDarkTheme),
+        // check if system is dark or light then do either atomOneDarkTheme or atomOneLightTheme
+        data: CodeThemeData(
+            styles:
+                MediaQuery.of(context).platformBrightness == Brightness.dark ? atomOneDarkTheme : atomOneLightTheme),
         child: SingleChildScrollView(
           physics: const ClampingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           child: CodeField(

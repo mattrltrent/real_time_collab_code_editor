@@ -12,6 +12,9 @@ import 'firebase_options.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.green,
+  ));
   init().then((_) {
     runApp(const MyApp());
   });

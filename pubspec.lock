@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.39"
+  alert_banner:
+    dependency: "direct main"
+    description:
+      name: alert_banner
+      sha256: b290fb6e97c4f18e5f9369b1edeb1f7bea416ae7327fcde15342ad7723b9c7e2
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   async:
     dependency: transitive
     description:
