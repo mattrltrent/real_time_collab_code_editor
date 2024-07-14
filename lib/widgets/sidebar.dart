@@ -1,5 +1,6 @@
 import 'package:alert_banner/exports.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:uvec/state/firebase.dart';
 import 'package:uvec/config/typography.dart';
@@ -48,7 +49,8 @@ class _SidebarState extends State<Sidebar> {
           child: Text(
             "uvec demo",
             textAlign: TextAlign.center,
-            style: miniFont.copyWith(color: Theme.of(context).colorScheme.secondary),
+            style: miniFont.copyWith(
+                color: Theme.of(context).colorScheme.secondary),
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -79,11 +81,13 @@ class _SidebarState extends State<Sidebar> {
                               child: TextField(
                                 controller: _textController,
                                 decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 0),
                                   border: InputBorder.none,
                                   hintText: 'newFile.js',
                                   hintStyle: miniFont.copyWith(
-                                    color: Theme.of(context).colorScheme.onSurface,
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
                                   ),
                                 ),
                                 style: miniFont.copyWith(
@@ -145,5 +149,51 @@ class _SidebarState extends State<Sidebar> {
         ),
       ],
     );
+// =======
+//   final textController = TextEditingController();
+//   final FocusNode _focusNode = FocusNode();
+
+//   Widget build(BuildContext context) {
+//     return Form(
+//         key: _formKey,
+//         child: Column(children: <Widget>[
+//           KeyboardListener(
+//               focusNode: _focusNode,
+//               autofocus: true,
+//               onKeyEvent: (event) {
+//                 final firebaseState =
+//                     Provider.of<FirebaseState>(context, listen: false);
+//                 firebaseState.insertText(
+//                     textController.text.length, event.logicalKey.keyLabel);
+//                 print(event.logicalKey);
+//               },
+//               child: Column(
+//                 children: [
+//                   TextField(
+//                     controller: textController,
+//                     decoration: const InputDecoration(
+//                       border: OutlineInputBorder(),
+//                       hintText: 'Enter Data',
+//                     ),
+//                   ),
+//                   ElevatedButton(
+//                     onPressed: () {
+//                       // Validate returns true if the form is valid, or false otherwise.
+//                       // If the form is valid, display a snackbar. In the real world,
+//                       // you'd often call a server or save the information in a database.
+
+//                       final firebaseState =
+//                           Provider.of<FirebaseState>(context, listen: false);
+//                       firebaseState.detectChange();
+//                       firebaseState.addDocument('test', textController.text);
+//                       print(firebaseState.globalText);
+//                     },
+//                     child: const Text('Submit'),
+//                   ),
+//                 ],
+//               ))
+//         ]));
+// >>>>>>> Stashed changes
+//   }
   }
 }
