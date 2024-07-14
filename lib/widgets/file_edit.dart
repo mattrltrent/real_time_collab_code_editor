@@ -4,7 +4,9 @@ import 'package:flutter_highlight/themes/atom-one-dark.dart';
 import 'package:flutter_highlight/themes/atom-one-light.dart';
 import 'package:highlight/highlight.dart';
 import 'package:highlight/languages/all.dart' as all;
+import 'package:provider/provider.dart';
 import 'package:uvec/config/typography.dart';
+import 'package:uvec/state/firebase.dart';
 
 class FileEdit extends StatefulWidget {
   const FileEdit({super.key, required this.filename});
@@ -81,22 +83,34 @@ class _FileEditState extends State<FileEdit> {
       child: CodeTheme(
         // check if system is dark or light then do either atomOneDarkTheme or atomOneLightTheme
         data: CodeThemeData(
-            styles:
-                MediaQuery.of(context).platformBrightness == Brightness.dark ? atomOneDarkTheme : atomOneLightTheme),
+            styles: MediaQuery.of(context).platformBrightness == Brightness.dark
+                ? atomOneDarkTheme
+                : atomOneLightTheme),
         child: SingleChildScrollView(
-          physics: const ClampingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-          child: CodeField(
-            lineNumbers: true,
-            wrap: true,
-            lineNumberBuilder: (i, style) {
-              return TextSpan(
-                text: '${i + 1}',
-                style: codeFont.copyWith(height: 1.5),
-              );
-            },
-            controller: _controller,
-            textStyle: codeFont.copyWith(height: 1.5),
-          ),
+          physics: const ClampingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
+          child: KeyboardListener(
+              focusNode: FocusNode(),
+              onKeyEvent: (event) {
+                final firebaseState =
+                    Provider.of<FirebaseState>(context, listen: false);
+                firebaseState.updateDocumentText(
+                    '-O1n2PJ8NSPuLl0TcAe7', _controller.text);
+                print(_controller.text);
+              },
+              child: Container(
+                  child: CodeField(
+                lineNumbers: true,
+                wrap: true,
+                lineNumberBuilder: (i, style) {
+                  return TextSpan(
+                    text: '${i + 1}',
+                    style: codeFont.copyWith(height: 1.5),
+                  );
+                },
+                controller: _controller,
+                textStyle: codeFont.copyWith(height: 1.5),
+              ))),
         ),
       ),
     );
