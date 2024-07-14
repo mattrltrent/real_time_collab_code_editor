@@ -15,37 +15,24 @@ class FirebaseState extends ChangeNotifier {
 
     void fetchDocuments() {
     ref.child('documents').onValue.listen((DatabaseEvent event) {
-      final data = event.snapshot.value as Map<dynamic, dynamic>?;
-      print('Data fetched from Firebase: $data'); // Debugging statement
-      if (data != null) {
-        _documents = data.entries.map((entry) {
-          var documentData = entry.value as Map<dynamic, dynamic>;
-          return Document(
-            id: entry.key,
-            title: documentData['title'] ?? documentData['filename'], // Handle both cases
-            content: documentData['content'],
-          );
-        }).toList();
-        print('Parsed documents: $_documents'); // Debugging statement
-        notifyListeners();
-      } else {
-        print('No data found in the documents node'); // Debugging statement
-      }
+      final data = event.snapshot.value as Map<dynamic, dynamic>;
+      _documents = data.entries.map((entry) {
+        var documentData = entry.value as Map<dynamic, dynamic>;
+        return Document(
+          id: entry.key,
+          title: documentData['title'],
+          content: documentData['content'],
+        );
+      }).toList();
+      notifyListeners();
     });
   }
 
-  Future<Document?> fetchDocumentById(String id) async {
-    DatabaseReference documentRef = ref.child('documents').child(id);
-    DatabaseEvent event = await documentRef.once();
-    if (event.snapshot.value != null) {
-      var documentData = event.snapshot.value as Map<dynamic, dynamic>;
-      return Document(
-        id: id,
-        title: documentData['title'],
-        content: documentData['content'],
-      );
-    }
-    return null;
+  void createUser(String name, List<String> documents) {
+    ref.child('users').push().set({
+      'name': name,
+      'documents': documents,
+    });
   }
 
   void addDocument(String title, String content) {
@@ -85,4 +72,5 @@ class FirebaseState extends ChangeNotifier {
       'content': content,
     });
   }
+
 }
