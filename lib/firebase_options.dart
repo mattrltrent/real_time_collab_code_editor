@@ -55,6 +55,7 @@ class DefaultFirebaseOptions {
     appId: '1:419684208484:android:60fcff363ce148d4537471',
     messagingSenderId: '419684208484',
     projectId: 'vscode-clone',
+    databaseURL: 'https://vscode-clone-default-rtdb.firebaseio.com',
     storageBucket: 'vscode-clone.appspot.com',
   );
 
@@ -84,6 +85,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '419684208484',
     projectId: 'vscode-clone',
     authDomain: 'vscode-clone.firebaseapp.com',
+    databaseURL: 'https://vscode-clone-default-rtdb.firebaseio.com',
     storageBucket: 'vscode-clone.appspot.com',
   );
+
 }

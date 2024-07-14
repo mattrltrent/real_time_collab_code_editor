@@ -26,5 +26,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:419684208484:ios:d83e6be7405fd947537471</string>
+	<key>DATABASE_URL</key>
+	<string>https://vscode-clone-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

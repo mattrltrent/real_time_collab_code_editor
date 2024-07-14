@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uvec/state/firebase.dart';
 
 class Sidebar extends StatefulWidget {
   const Sidebar({super.key});
@@ -11,13 +12,14 @@ class Sidebar extends StatefulWidget {
 class _SidebarState extends State<Sidebar> {
   @override
   final _formKey = GlobalKey<FormState>();
-
+  final textController = TextEditingController();
   Widget build(BuildContext context) {
     return Form(
         key: _formKey,
         child: Column(
           children: <Widget>[
             TextField(
+              controller: textController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Enter Data',
@@ -26,13 +28,11 @@ class _SidebarState extends State<Sidebar> {
             ElevatedButton(
               onPressed: () {
                 // Validate returns true if the form is valid, or false otherwise.
-                if (_formKey.currentState!.validate()) {
-                  // If the form is valid, display a snackbar. In the real world,
-                  // you'd often call a server or save the information in a database.
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing Data')),
-                  );
-                }
+                // If the form is valid, display a snackbar. In the real world,
+                // you'd often call a server or save the information in a database.
+                final firebaseState =
+                    Provider.of<FirebaseState>(context, listen: false);
+                firebaseState.addDocument('test', textController.text);
               },
               child: const Text('Submit'),
             ),
