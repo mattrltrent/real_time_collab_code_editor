@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:uvec/router.dart';
+import 'package:uvec/state/firebase.dart';
 
 import 'config/themes.dart';
 import 'init.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AppState()),
+        ChangeNotifierProvider(create: (_) => FirebaseState()),
       ],
       child: MaterialApp.router(
         routeInformationProvider: router.routeInformationProvider,

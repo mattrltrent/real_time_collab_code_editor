@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../models/models.dart';
 
-class AppState extends ChangeNotifier {
+class FirebaseState extends ChangeNotifier {
   DatabaseReference ref = FirebaseDatabase.instance.ref();
   final Document curDocument =
       Document(id: '0', title: 'title', content: 'content');
@@ -16,9 +16,9 @@ class AppState extends ChangeNotifier {
     });
   }
 
-  void addDocument(String title, String content) {
+  void addDocument(String filename, String content) {
     ref.child('documents').push().set({
-      'title': title,
+      'filename': filename,
       'content': content,
     });
   }

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "419684208484",
+    "firebase_url": "https://vscode-clone-default-rtdb.firebaseio.com",
     "project_id": "vscode-clone",
     "storage_bucket": "vscode-clone.appspot.com"
   },
