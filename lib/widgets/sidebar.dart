@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:uvec/state/firebase.dart';
 import 'package:uvec/config/typography.dart';
 import 'package:uvec/effects/touchable_opacity.dart';
+import 'package:uvec/state/state.dart';
 import 'package:uvec/widgets/banner.dart';
 import 'package:uvec/widgets/file_listing.dart';
 
@@ -31,7 +32,7 @@ class _SidebarState extends State<Sidebar> {
       showAlertBanner(
         context,
         () {},
-        const MyBanner(text: "Invalid file name, an example: newFile.js"),
+        const MyBanner(text: "Invalid file name, try newFile.js"),
         maxLength: 500,
       );
     }
@@ -133,9 +134,26 @@ class _SidebarState extends State<Sidebar> {
                         itemBuilder: (context, index) {
                           final document = firebaseState.documents[index];
                           return FileListing(
-                            onClick: () {},
+                            onClick: () {
+                              // if doc to open's id is already in _openFiles then ignore and set it to the focused one
+                              if (Provider.of<AppState>(context, listen: false)
+                                  .openFiles
+                                  .any((doc) => doc.id == document.id)) {
+                                Provider.of<AppState>(context, listen: false).setSelectedFileId(
+                                  document.id,
+                                );
+                                return;
+                              }
+
+                              // add to open files, and then set selected file index to that index
+                              Provider.of<AppState>(context, listen: false).addOpenFile(document);
+                              // get idx by getIdxOfOpenFile, then set that as the focused one
+                              Provider.of<AppState>(context, listen: false).setSelectedFileId(
+                                document.id,
+                              );
+                            },
                             onDeletePressed: () {},
-                            onEditPressed: () {},
+                            onEditPressed: (newName) {},
                             fileName: document.title,
                           );
                         },

@@ -7,11 +7,12 @@ import 'package:highlight/languages/all.dart' as all;
 import 'package:provider/provider.dart';
 import 'package:uvec/config/typography.dart';
 import 'package:uvec/state/firebase.dart';
+import 'package:uvec/models/models.dart';
 
 class FileEdit extends StatefulWidget {
-  const FileEdit({super.key, required this.filename});
+  const FileEdit({super.key, required this.doc});
 
-  final String filename;
+  final Document doc;
 
   @override
   State<FileEdit> createState() => _FileEditState();
@@ -27,11 +28,11 @@ class _FileEditState extends State<FileEdit> {
   }
 
   void _initializeController() {
-    final String langExtension = widget.filename.split('.').last;
+    final String langExtension = widget.doc.title.split('.').last;
     final Mode language = _getLanguageByExtension(langExtension);
 
     _controller = CodeController(
-      text: "console.log('Hello, World!');",
+      text: widget.doc.content,
       language: language,
     );
 
@@ -81,36 +82,31 @@ class _FileEditState extends State<FileEdit> {
           : const Color(0xfffafafa),
       height: double.infinity,
       child: CodeTheme(
-        // check if system is dark or light then do either atomOneDarkTheme or atomOneLightTheme
         data: CodeThemeData(
-            styles: MediaQuery.of(context).platformBrightness == Brightness.dark
-                ? atomOneDarkTheme
-                : atomOneLightTheme),
+          styles: MediaQuery.of(context).platformBrightness == Brightness.dark ? atomOneDarkTheme : atomOneLightTheme,
+        ),
         child: SingleChildScrollView(
-          physics: const ClampingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics()),
+          physics: const ClampingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           child: KeyboardListener(
-              focusNode: FocusNode(),
-              onKeyEvent: (event) {
-                final firebaseState =
-                    Provider.of<FirebaseState>(context, listen: false);
-                firebaseState.updateContent(
-                    '-O1n2PJ8NSPuLl0TcAe7', _controller.text);
-                print(_controller.text);
+            focusNode: FocusNode(),
+            onKeyEvent: (event) {
+              final firebaseState = Provider.of<FirebaseState>(context, listen: false);
+              firebaseState.updateContent(widget.doc.id, _controller.text);
+              print(_controller.text);
+            },
+            child: CodeField(
+              lineNumbers: true,
+              wrap: true,
+              lineNumberBuilder: (i, style) {
+                return TextSpan(
+                  text: '${i + 1}',
+                  style: codeFont.copyWith(height: 1.5),
+                );
               },
-              child: Container(
-                  child: CodeField(
-                lineNumbers: true,
-                wrap: true,
-                lineNumberBuilder: (i, style) {
-                  return TextSpan(
-                    text: '${i + 1}',
-                    style: codeFont.copyWith(height: 1.5),
-                  );
-                },
-                controller: _controller,
-                textStyle: codeFont.copyWith(height: 1.5),
-              ))),
+              controller: _controller,
+              textStyle: codeFont.copyWith(height: 1.5),
+            ),
+          ),
         ),
       ),
     );

@@ -3,11 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uvec/config/typography.dart';
 import 'package:uvec/effects/touchable_opacity.dart';
+import 'package:uvec/models/models.dart';
 
 class FileTab extends StatefulWidget {
-  const FileTab({super.key, required this.text});
+  const FileTab(
+      {super.key, required this.document, required this.onClose, required this.onSelect, required this.isSelected});
 
-  final String text; // like myfile.py or server.js
+  final Document document;
+  final VoidCallback onClose;
+  final VoidCallback onSelect;
+  final bool isSelected;
 
   @override
   State<FileTab> createState() => _FileTabState();
@@ -19,60 +24,66 @@ class _FileTabState extends State<FileTab> {
   @override
   Widget build(BuildContext context) {
     // Extract the file extension
-    final String fileExtension = widget.text.split('.').last;
+    final String fileExtension = widget.document.title.split('.').last;
 
-    return MouseRegion(
-      onEnter: (_) {
-        setState(() {
-          _isHovered = true;
-        });
-      },
-      onExit: (_) {
-        setState(() {
-          _isHovered = false;
-        });
-      },
-      cursor: SystemMouseCursors.click,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
-          border: Border(
-            bottom: BorderSide(
-              color: _isHovered ? Theme.of(context).colorScheme.secondary : Colors.transparent,
-              width: 2,
+    return TouchableOpacity(
+      onTap: widget.onSelect,
+      child: MouseRegion(
+        onEnter: (_) {
+          setState(() {
+            _isHovered = true;
+          });
+        },
+        onExit: (_) {
+          setState(() {
+            _isHovered = false;
+          });
+        },
+        cursor: SystemMouseCursors.click,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+            border: Border(
+              bottom: BorderSide(
+                color: widget.isSelected
+                    ? Theme.of(context).colorScheme.secondary
+                    : _isHovered
+                        ? Theme.of(context).colorScheme.primary
+                        : Colors.transparent,
+                width: 2,
+              ),
             ),
           ),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // File extension icon
-            FileIcon(
-              '.$fileExtension',
-              size: 24.0,
-            ),
-            // File name
-            Text(
-              widget.text,
-              style: miniFont.copyWith(color: Theme.of(context).colorScheme.primary),
-            ),
-            const SizedBox(width: 8.0),
-            // Close button
-            TouchableOpacity(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 2),
-                child: Icon(
-                  CupertinoIcons.xmark,
-                  size: 12.0,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // File extension icon
+              FileIcon(
+                '.$fileExtension',
+                size: 24.0,
               ),
-              onTap: () => print("tap"),
-            ),
-          ],
+              // File name
+              Text(
+                widget.document.title,
+                style: miniFont.copyWith(color: Theme.of(context).colorScheme.primary),
+              ),
+              const SizedBox(width: 8.0),
+              // Close button
+              TouchableOpacity(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Icon(
+                    CupertinoIcons.xmark,
+                    size: 12.0,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+                onTap: widget.onClose,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -20,7 +20,7 @@ class TerminalTabText extends StatelessWidget {
         text,
         style: Provider.of<AppState>(context).terminalTabSelected == idx
             ? bodyFont.copyWith(
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.secondary,
                 fontWeight: FontWeight.bold,
               )
             : bodyFont.copyWith(
