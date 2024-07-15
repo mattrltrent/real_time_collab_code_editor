@@ -1,16 +1,19 @@
-# uvec
+# Cloud-first real-time collaborative code editor 🚀
 
-A new Flutter project.
+Built from scratch in 6 hours for the [UVic Engineering Competition](https://onlineacademiccommunity.uvic.ca/ess/university-of-victoria-engineering-competition/) • 2nd place 🥈
 
-## Getting Started
+![demo](https://raw.githubusercontent.com/mattrltrent/random_assets/main/uvec.gif)
 
-This project is a starting point for a Flutter application.
+### Features
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Platform offerings: iOS, Android, Windows, Web, & Mac
+- Real-time collaboration
+- Syntax highlighting
+- Adding new files to the workplace
+- Deleting files from the workplace
+- Renaming files in the workplace
+- Error handling & messages
+- Local file caching
+- Text collision detection & handling
+- Custom keybinds
+- ... and more!
