@@ -4,6 +4,8 @@ Built from scratch in 6 hours for the [UVic Engineering Competition](https://onl
 
 ![demo](https://raw.githubusercontent.com/mattrltrent/random_assets/main/uvec.gif)
 
+<sup>⬆️ The screen recorder blocks the app's cursor animations, but they are there.</sup>
+
 ### Features
 
 - Platform offerings: iOS, Android, Windows, Web, & Mac
