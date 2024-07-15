@@ -1,10 +1,16 @@
 # Cloud-first real-time collaborative code editor 🚀
 
-Built from scratch in 6 hours for the [UVic Engineering Competition](https://onlineacademiccommunity.uvic.ca/ess/university-of-victoria-engineering-competition/) • 2nd place 🥈
+**Built from scratch in 6 hours for the [UVic Engineering Competition](https://onlineacademiccommunity.uvic.ca/ess/university-of-victoria-engineering-competition/) • 2nd place 🥈**
+
+---
 
 ![demo](https://raw.githubusercontent.com/mattrltrent/random_assets/main/uvec.gif)
 
-<sup>⬆️ The screen recorder blocks the app's cursor animations, but they are there.</sup>
+<sup>⬆️ The screen recorder blocks the app's cursor animations, but they are there in the real version.</sup>
+
+![the team](https://raw.githubusercontent.com/mattrltrent/random_assets/main/us.JPG)
+
+<sup>⬆️ The team: tired, but successful.</sup>
 
 ### Features
 
